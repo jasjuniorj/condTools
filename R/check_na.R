@@ -10,3 +10,5 @@ check_na <- function(df) {
     prop_na = sapply(df, function(x) mean(is.na(x)))
   )
 }
+
+
