@@ -1,5 +1,5 @@
 Package: condTools
-Title: Feramenta para tratamento de dados do Sicon
+Title: Feramenta para tratamento e validação de dados do Sicon
 Version: 0.0.0.9000
 Authors@R: 
     person("CGIN", "DECON", , "jose.alexandre@mds.gov.br", role = c("aut", "cre"))
