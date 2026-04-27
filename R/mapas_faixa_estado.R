@@ -1,3 +1,4 @@
+#' @export
 mapa_faixas_estado <- function(base_dados,
                                variavel,
                                estado = NULL,

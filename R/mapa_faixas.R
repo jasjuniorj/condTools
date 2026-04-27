@@ -1,3 +1,4 @@
+#' @export
 mapa_faixas <- function(base_dados,
                         variavel,
                         nome_legenda = "Cobertura (%)",

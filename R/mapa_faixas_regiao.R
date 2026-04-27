@@ -1,3 +1,4 @@
+#' @export
 mapa_faixas_regiao <- function(base_dados,
                                variavel,
                                regiao = NULL,
