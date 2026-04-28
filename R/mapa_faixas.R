@@ -63,3 +63,4 @@ mapa_faixas <- function(base_dados,
       axis.title = element_blank()
     )
 }
+
