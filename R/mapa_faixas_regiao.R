@@ -2,7 +2,7 @@
 mapa_faixas_regiao <- function(base_dados,
                                variavel,
                                regiao = NULL,
-                               nome_legenda = "Cobertura (%)",
+                               nome_legenda = "Taxa de Acompanhamento",
                                ano = 2020) {
 
   library(dplyr)
@@ -11,8 +11,8 @@ mapa_faixas_regiao <- function(base_dados,
 
   # --- mapas ---
   mun <- read_municipality(year = ano)
-  mun$code_muni <- substr(mun$code_muni, 1, nchar(mun$code_muni) - 1)
-  mun$code_muni <- as.numeric(mun$code_muni)
+  #mun$code_muni <- substr(mun$code_muni, 1, nchar(mun$code_muni) - 1)
+  #mun$code_muni <- as.numeric(mun$code_muni)
 
   estados <- read_state(code_state = "all", year = ano)
 

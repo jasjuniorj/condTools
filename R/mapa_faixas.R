@@ -1,6 +1,7 @@
 #' @export
 mapa_faixas <- function(base_dados,
                         variavel,
+                        Periodo,
                         nome_legenda = "Taxa de Acompanhamento",
                         ano = 2020) {
 
@@ -17,6 +18,7 @@ mapa_faixas <- function(base_dados,
 
   # --- preparar base ---
   df <- base_dados %>%
+    filter(DS_PERIODO==Periodo) %>%
     right_join(mun, by = "code_muni") %>%
     mutate(
       valor = {{ variavel }},
