@@ -1,7 +1,7 @@
 #' @export
 mapa_faixas <- function(base_dados,
                         variavel,
-                        nome_legenda = "Cobertura (%)",
+                        nome_legenda = "Taxa de Acompanhamento",
                         ano = 2020) {
 
   library(dplyr)
@@ -10,8 +10,8 @@ mapa_faixas <- function(base_dados,
 
   # --- carregar mapas ---
   mun <- read_municipality(year = ano)
-  mun$code_muni <- substr(mun$code_muni, 1, nchar(mun$code_muni) - 1)
-  mun$code_muni <- as.numeric(mun$code_muni)
+  #mun$code_muni <- substr(mun$code_muni, 1, nchar(mun$code_muni) - 1)
+  #mun$code_muni <- as.numeric(mun$code_muni)
 
   estados <- read_state(code_state = "all", year = ano)
 
@@ -35,16 +35,17 @@ mapa_faixas <- function(base_dados,
     scale_fill_manual(
       name = nome_legenda,
       values = c(
-        "0–12%"   = "#fee5d9",
-        "12–24%"  = "#fcbba1",
-        "24–36%"  = "#fc9272",
-        "36–48%"  = "#fb6a4a",
-        "48–60%"  = "#de2d26",
-        "60–100%" = "#a40f15"
+        "0-50%"   = "#bcffdd",
+        "50-60%"  = "#a4f0a7",
+        "60-70%"  = "#7dd980",
+        "70-80%"  = "#02ba02",
+        "80-90%"  = "#069525",
+        "90-95%"  = "#095747",
+        "95-100%" = "#053c32"
       ),
       na.value = "#eeeeee",
       drop = FALSE
-    ) +
+    )+
 
     geom_sf(data = estados,
             fill = NA,
