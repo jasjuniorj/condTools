@@ -20,7 +20,7 @@ mapa_faixas <- function(base_dados,
   # --- preparar base ---
   df <- base_dados %>%
     filter(DS_PERIODO == Periodo) %>%
-    right_join(mun, by = c(codigoibge = "code_muni")) %>%
+    right_join(mun, by = "code_muni") %>%
     mutate(
       valor = {{ variavel }},
       faixa = cut(valor,
