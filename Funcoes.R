@@ -8,8 +8,6 @@ devtools::document()
 # 2. Testar localmente (usa código da pasta R/)
 devtools::load_all()
 
-# teste sua função
-mapa_faixas(...)
 
 # 3. Versionar
 system("git add .")

@@ -11,8 +11,10 @@ mapa_faixas_regiao <- function(base_dados,
   library(ggplot2)
   library(geobr)
 
-  # --- mapas ---
-  mun <- read_municipality(year = ano)
+  # --- mapas (PADRONIZANDO TIPO) ---
+  mun <- read_municipality(year = ano) %>%
+    mutate(code_muni = as.character(code_muni))
+
   estados <- read_state(code_state = "all", year = ano)
 
   # --- preparar base ---
@@ -23,13 +25,13 @@ mapa_faixas_regiao <- function(base_dados,
     right_join(mun, by = "code_muni") %>%
     mutate(valor = {{ variavel }})
 
-  # --- filtrar região (se houver) ---
+  # --- filtrar região (ARGUMENTO CONTROLANDO O MAPA) ---
   if (!is.null(regiao)) {
-    df <- df %>% filter(abbrev_region == regiao)
-    estados <- estados %>% filter(abbrev_region == regiao)
+    df <- df %>% filter(abbrev_region %in% regiao)
+    estados <- estados %>% filter(abbrev_region %in% regiao)
   }
 
-  # --- faixas (NOVAS) ---
+  # --- faixas ---
   df <- df %>%
     mutate(
       faixa = cut(valor,
