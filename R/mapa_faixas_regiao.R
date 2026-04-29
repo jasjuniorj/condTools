@@ -1,6 +1,8 @@
 #' @export
 mapa_faixas_regiao <- function(base_dados,
                                variavel,
+                               codigoibge,
+                               Periodo = NULL,
                                regiao = NULL,
                                nome_legenda = "Taxa de Acompanhamento",
                                ano = 2020) {
@@ -11,13 +13,13 @@ mapa_faixas_regiao <- function(base_dados,
 
   # --- mapas ---
   mun <- read_municipality(year = ano)
-  #mun$code_muni <- substr(mun$code_muni, 1, nchar(mun$code_muni) - 1)
-  #mun$code_muni <- as.numeric(mun$code_muni)
-
   estados <- read_state(code_state = "all", year = ano)
 
-  # --- base ---
+  # --- preparar base ---
   df <- base_dados %>%
+    { if (!is.null(Periodo)) filter(., DS_PERIODO == Periodo) else . } %>%
+    rename(code_muni = {{ codigoibge }}) %>%
+    mutate(code_muni = as.character(code_muni)) %>%
     right_join(mun, by = "code_muni") %>%
     mutate(valor = {{ variavel }})
 
@@ -27,13 +29,15 @@ mapa_faixas_regiao <- function(base_dados,
     estados <- estados %>% filter(abbrev_region == regiao)
   }
 
-  # --- faixas ---
+  # --- faixas (NOVAS) ---
   df <- df %>%
-    mutate(faixa = cut(valor * 100,
-                       breaks = c(0, 12, 24, 36, 48, 60, 100),
-                       include.lowest = TRUE,
-                       labels = c("0–12%", "12–24%", "24–36%",
-                                  "36–48%", "48–60%", "60–100%")))
+    mutate(
+      faixa = cut(valor,
+                  breaks = c(0, 50, 60, 70, 80, 90, 95, 100),
+                  include.lowest = TRUE,
+                  labels = c("0-50%", "50-60%", "60-70%",
+                             "70-80%", "80-90%", "90-95%", "95-100%"))
+    )
 
   # --- plot ---
   p <- ggplot(df) +
@@ -42,12 +46,13 @@ mapa_faixas_regiao <- function(base_dados,
     scale_fill_manual(
       name = nome_legenda,
       values = c(
-        "0–12%"   = "#fee5d9",
-        "12–24%"  = "#fcbba1",
-        "24–36%"  = "#fc9272",
-        "36–48%"  = "#fb6a4a",
-        "48–60%"  = "#de2d26",
-        "60–100%" = "#a40f15"
+        "0-50%"   = "#bcffdd",
+        "50-60%"  = "#a4f0a7",
+        "60-70%"  = "#7dd980",
+        "70-80%"  = "#02ba02",
+        "80-90%"  = "#069525",
+        "90-95%"  = "#095747",
+        "95-100%" = "#053c32"
       ),
       na.value = "#eeeeee",
       drop = FALSE
@@ -55,7 +60,7 @@ mapa_faixas_regiao <- function(base_dados,
 
     geom_sf(data = estados,
             fill = NA,
-            color = "#8C8C8C",
+            color = "#7F7F7F",
             size = 0.2) +
 
     theme_minimal() +
