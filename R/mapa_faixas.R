@@ -35,14 +35,14 @@ mapa_faixas <- function(base_dados,
             color = NA) +
 
     scale_fill_manual(
-      name = nome_legenda,
+      name = "Taxa de Acompanhamento",
       values = c(
-        "0-50%"   = "#bcffdd",
-        "50-60%"  = "#a4f0a7",
-        "60-70%"  = "#7dd980",
-        "70-80%"  = "#02ba02",
-        "80-90%"  = "#069525",
-        "90-95%"  = "#095747",
+        "0–50%"   = "#bcffdd",
+        "50–60%"  = "#a4f0a7",
+        "60–70%"  = "#7dd980",
+        "70–80%"  = "#02ba02",
+        "80–90%"  = "#069525",
+        "90–95%"  = "#095747",
         "95-100%" = "#053c32"
       ),
       na.value = "#eeeeee",
