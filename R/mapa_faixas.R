@@ -11,7 +11,7 @@ mapa_faixas <- function(base_dados,
   library(geobr)
 
   # capturar nomes
-  codigoibge <- rlang::as_name(rlang::ensym(codigoibge))
+  code_muni <- rlang::as_name(rlang::ensym(codigoibge))
 
   # --- carregar mapas ---
   mun <- read_municipality(year = ano)
