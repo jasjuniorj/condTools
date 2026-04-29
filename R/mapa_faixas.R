@@ -18,7 +18,7 @@ mapa_faixas <- function(base_dados,
   # --- preparar base ---
   df <- base_dados %>%
     filter(DS_PERIODO == Periodo) %>%
-    rename(code_muni=codigoibge) %>%
+    rename(code_muni={{ codigoibge }}) %>%
     right_join(mun, by = "code_muni") %>%
     mutate(
       valor = {{ variavel }},
