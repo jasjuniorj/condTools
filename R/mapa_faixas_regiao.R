@@ -4,7 +4,7 @@ mapa_faixas_regiao <- function(base_dados,
                                codigoibge,
                                Periodo = NULL,
                                regiao = NULL,
-                               nome_legenda = "Taxa de Acompanhamento",
+                               nome_legenda = " ",
                                ano = 2020) {
 
   library(dplyr)
@@ -84,8 +84,14 @@ mapa_faixas_regiao <- function(base_dados,
     theme_minimal() +
     theme(
       legend.position = "right",
+      plot.title = element_text(size = 9, hjust = 0.5),
+      plot.caption = element_text(size = 9, hjust = 0.5),
+      legend.title = element_text(size = 9),
+      legend.text = element_text(size = 14),
       panel.grid = element_blank(),
-      axis.text = element_blank(),
-      axis.title = element_blank()
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank()
     )
 }
