@@ -3,7 +3,7 @@ mapa_faixas <- function(base_dados,
                         variavel,
                         Periodo,
                         codigoibge,
-                        nome_legenda = "Taxa de Acompanhamento",
+                        nome_legenda = " ",
                         ano = 2020) {
 
   library(dplyr)
@@ -47,6 +47,18 @@ mapa_faixas <- function(base_dados,
       drop = FALSE
     ) +
     geom_sf(data = estados, fill = NA, color = "#7F7F7F", size = 0.1) +
-    theme_minimal()
+    theme_minimal() +
+    theme(
+      legend.position = "right",
+      plot.title = element_text(size = 9, hjust = 0.5),
+      plot.caption = element_text(size = 9, hjust = 0.5),
+      legend.title = element_text(size = 9),
+      legend.text = element_text(size = 14),
+      panel.grid = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank()
+    )
 }
 
