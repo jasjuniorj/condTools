@@ -2,7 +2,7 @@
 mapa_faixas <- function(base_dados,
                         variavel,
                         Periodo,
-                        codigoibge,
+                        code_muni,
                         nome_legenda = "Taxa de Acompanhamento",
                         ano = 2020) {
 
@@ -11,7 +11,7 @@ mapa_faixas <- function(base_dados,
   library(geobr)
 
   # capturar nomes
-  code_muni <- rlang::as_name(rlang::ensym(codigoibge))
+  code_muni <- rlang::as_name(rlang::ensym(code_muni))
 
   # --- carregar mapas ---
   mun <- read_municipality(year = ano)
