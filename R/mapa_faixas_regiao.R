@@ -11,7 +11,7 @@ mapa_faixas_regiao <- function(base_dados,
   library(ggplot2)
   library(geobr)
 
-  # --- mapas (PADRONIZANDO TIPO) ---
+  # --- mapas ---
   mun <- read_municipality(year = ano) %>%
     mutate(code_muni = as.character(code_muni))
 
@@ -23,12 +23,31 @@ mapa_faixas_regiao <- function(base_dados,
     rename(code_muni = {{ codigoibge }}) %>%
     mutate(code_muni = as.character(code_muni)) %>%
     right_join(mun, by = "code_muni") %>%
-    mutate(valor = {{ variavel }})
+    mutate(
+      valor = {{ variavel }},
+      abbrev_region = dplyr::recode(name_region,
+                                    "Norte" = "N",
+                                    "Nordeste" = "NE",
+                                    "Sudeste" = "SE",
+                                    "Sul" = "S",
+                                    "Centro-Oeste" = "CO"
+      )
+    )
 
-  # --- filtrar região (ARGUMENTO CONTROLANDO O MAPA) ---
+  # --- filtro de região ---
   if (!is.null(regiao)) {
     df <- df %>% filter(abbrev_region %in% regiao)
-    estados <- estados %>% filter(abbrev_region %in% regiao)
+    estados <- estados %>%
+      mutate(
+        abbrev_region = dplyr::recode(name_region,
+                                      "Norte" = "N",
+                                      "Nordeste" = "NE",
+                                      "Sudeste" = "SE",
+                                      "Sul" = "S",
+                                      "Centro-Oeste" = "CO"
+        )
+      ) %>%
+      filter(abbrev_region %in% regiao)
   }
 
   # --- faixas ---
@@ -42,9 +61,8 @@ mapa_faixas_regiao <- function(base_dados,
     )
 
   # --- plot ---
-  p <- ggplot(df) +
+  ggplot(df) +
     geom_sf(aes(fill = faixa, geometry = geom), color = NA) +
-
     scale_fill_manual(
       name = nome_legenda,
       values = c(
@@ -59,12 +77,10 @@ mapa_faixas_regiao <- function(base_dados,
       na.value = "#eeeeee",
       drop = FALSE
     ) +
-
     geom_sf(data = estados,
             fill = NA,
             color = "#7F7F7F",
             size = 0.2) +
-
     theme_minimal() +
     theme(
       legend.position = "right",
@@ -72,6 +88,4 @@ mapa_faixas_regiao <- function(base_dados,
       axis.text = element_blank(),
       axis.title = element_blank()
     )
-
-  return(p)
 }
