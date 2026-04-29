@@ -2,7 +2,7 @@
 mapa_faixas <- function(base_dados,
                         variavel,
                         Periodo,
-                        code_muni,
+                        codigoibge,
                         nome_legenda = "Taxa de Acompanhamento",
                         ano = 2020) {
 
@@ -10,8 +10,6 @@ mapa_faixas <- function(base_dados,
   library(ggplot2)
   library(geobr)
 
-  # capturar nomes
-  code_muni <- rlang::as_name(rlang::ensym(code_muni))
 
   # --- carregar mapas ---
   mun <- read_municipality(year = ano)
@@ -20,6 +18,7 @@ mapa_faixas <- function(base_dados,
   # --- preparar base ---
   df <- base_dados %>%
     filter(DS_PERIODO == Periodo) %>%
+    rename(code_muni=codigoibge) %>%
     right_join(mun, by = "code_muni") %>%
     mutate(
       valor = {{ variavel }},
