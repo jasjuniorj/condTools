@@ -60,7 +60,7 @@ mapa_faixas <- function(base_dados,
       plot.title = element_text(size = 9, hjust = 0.5),
       plot.caption = element_text(size = 9, hjust = 0.5),
       legend.title = element_text(size = 9),
-      legend.text = element_text(size = 9),
+      legend.text = element_text(size = 14),
       panel.grid = element_blank(),
       axis.text = element_blank(),
       axis.title = element_blank()
