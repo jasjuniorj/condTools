@@ -20,11 +20,11 @@ mapa_faixas <- function(base_dados,
     right_join(mun, by = "code_muni") %>%
     mutate(
       valor = {{ variavel }},
-      faixa = cut(valor * 100,
-                  breaks = c(0, 12, 24, 36, 48, 60, 100),
+      faixa = cut(valor,
+                  breaks = c(0, 50, 60, 70, 80, 90, 95, 100),
                   include.lowest = TRUE,
-                  labels = c("0–12%", "12–24%", "24–36%",
-                             "36–48%", "48–60%", "60–100%"))
+                  labels = c("0–50%", "50–60%", "60–70%",
+                             "70–80%", "80–90%", "90–95%", "95-100%"))
     )
 
   # --- plot ---
